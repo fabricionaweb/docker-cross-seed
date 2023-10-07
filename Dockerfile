@@ -30,14 +30,14 @@ RUN apk add --no-cache build-base python3 nodejs-current && corepack enable npm
 
 # node_modules
 COPY --from=source /src/package*.json /src/tsconfig.json ./
-RUN npm ci --foreground-scripts=true
+RUN npm ci --fund=false --audit=false
 
-# build
+# source and build
 COPY --from=source /src/src ./src
 RUN npm run build
 
 # cleanup
-RUN npm prune --omit=dev && \
+RUN npm prune --omit=dev --fund=false --audit=false && \
     find ./ \( -name "*.map" -o -name "*.ts" -o -name "*.md" \) -type f -delete
 
 # runtime stage ================================================================
@@ -51,8 +51,8 @@ EXPOSE 2468
 
 # copy files
 COPY --from=build-backend /src/package.json /app/
-COPY --from=build-backend /src/dist /app/dist
 COPY --from=build-backend /src/node_modules /app/node_modules
+COPY --from=build-backend /src/dist /app/dist
 COPY ./rootfs /
 
 # runtime dependencies
