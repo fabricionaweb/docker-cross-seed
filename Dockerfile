@@ -14,10 +14,8 @@ RUN test -n "$BRANCH" && test -n "$VERSION"
 # get and extract source from git
 ADD https://github.com/cross-seed/cross-seed.git#v$VERSION ./
 
-# dependencies
-# RUN apk add --no-cache patch
-
 # apply available patches
+# RUN apk add --no-cache patch
 # COPY patches ./
 # RUN find . -name "*.patch" -print0 | sort -z | xargs -t -0 -n1 patch -p1 -i
 
