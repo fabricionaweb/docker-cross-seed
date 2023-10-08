@@ -1,17 +1,13 @@
 # syntax=docker/dockerfile:1-labs
 FROM public.ecr.aws/docker/library/alpine:3.18 AS base
-ARG BRANCH
-ARG VERSION
 ENV TZ=UTC
 
 # source stage =================================================================
 FROM base AS source
 WORKDIR /src
 
-# mandatory build-arg
-RUN test -n "$BRANCH" && test -n "$VERSION"
-
 # get and extract source from git
+ARG VERSION
 ADD https://github.com/cross-seed/cross-seed.git#v$VERSION ./
 
 # apply available patches
