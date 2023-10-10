@@ -50,7 +50,7 @@ RUN apk add --no-cache tzdata s6-overlay nodejs-current curl
 COPY --from=source /src/package.json /app/
 COPY --from=build-backend /src/node_modules /app/node_modules
 COPY --from=build-backend /src/dist /app/dist
-COPY ./rootfs /
+COPY ./rootfs/. /
 
 # run using s6-overlay
 ENTRYPOINT ["/init"]
