@@ -10,11 +10,6 @@ WORKDIR /src
 ARG VERSION
 ADD https://github.com/cross-seed/cross-seed.git#v$VERSION ./
 
-# apply available patches
-# RUN apk add --no-cache patch
-# COPY patches ./
-# RUN find . -name "*.patch" -print0 | sort -z | xargs -t -0 -n1 patch -p1 -i
-
 # build stage ==================================================================
 FROM base AS build-backend
 WORKDIR /src
@@ -31,7 +26,7 @@ COPY --from=source /src/src ./src
 RUN npm run build
 
 # cleanup
-RUN npm prune --omit=dev --fund=false --audit=false && \
+RUN npm prune --omit=dev && \
     find ./ \( -name "*.map" -o -name "*.ts" -o -name "*.md" \) -type f -delete
 
 # runtime stage ================================================================
