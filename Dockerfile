@@ -20,7 +20,7 @@ RUN apk add --no-cache build-base python3 nodejs-current && corepack enable npm
 COPY --from=source /src/package*.json /src/tsconfig.json ./
 RUN npm ci --fund=false --audit=false
 
-# source and build
+# build app
 COPY --from=source /src/src ./src
 RUN npm run build
 
