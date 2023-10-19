@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# change chdir
+cd /config
+
+# run with limited permissions
+exec s6-setuidgid $PUID:$PGID node /app/dist/cmd.js "$@"

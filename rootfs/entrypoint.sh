@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 if [ "$#" -gt 0 ]; then
-  # run the application with the provided params
-  exec s6-setuidgid $PUID:$PGID node /app/dist/cmd.js "$@"
+  # run (from /usr/local/bin) with the provided params
+  exec cross-seed "$@"
 else
   # if no params is provided, start s6 container as normal
   exec /init

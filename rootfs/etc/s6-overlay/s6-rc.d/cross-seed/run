@@ -1,7 +1,4 @@
 #!/usr/bin/with-contenv sh
 
-# change chdir
-cd /config
-
-# run with limited permissions
-exec s6-setuidgid $PUID:$PGID node /app/dist/cmd.js daemon --verbose
+# run (from /usr/local/bin)
+exec cross-seed daemon --verbose
