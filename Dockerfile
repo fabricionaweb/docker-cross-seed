@@ -26,7 +26,15 @@ RUN npm run build
 
 # cleanup
 RUN npm prune --omit=dev && \
-    find ./ \( -name "*.map" -o -name "*.ts" -o -name "*.md" \) -type f -delete
+    find ./ -type f \( \
+        -iname "*.cmd" -o -iname "*.bat" -o \
+        -iname "*.map" -o -iname "*.md" -o \
+        -iname "*.ts" -o -iname "*.git*" -o \
+        -iname "Makefile" -o -iname "AUTHORS*" -o \
+        -iname "LICENSE*" -o -iname "CONTRIBUTING*" -o \
+        -iname "CHANGELOG*" -o -iname "README*" \
+    \) -delete && \
+    find ./ -type d -iname ".github" | xargs rm -rf
 
 # runtime stage ================================================================
 FROM base
