@@ -4,6 +4,12 @@ on:
   push:
     paths: ['.env', 'Dockerfile', 'rootfs/**', 'patches/**']
   workflow_dispatch:
+    inputs:
+      no-cache:
+        description: 'Disable cache'
+        required: false
+        default: false
+        type: boolean
 
 env:
   REGISTRY_IMAGE: ghcr.io/${{ github.repository }}
@@ -33,7 +39,7 @@ jobs:
           images: ${{ env.REGISTRY_IMAGE }}
           tags: |
             # set latest tag for default branch
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=latest,enable={{ is_default_branch }}
             # branch
             type=ref,event=branch
             # version
@@ -56,6 +62,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           provenance: false
+          no-cache: ${{ github.event.inputs.no-cache == 'true' }}
           build-args: |
             BRANCH=${{ env.BRANCH }}
             VERSION=${{ env.VERSION }}
