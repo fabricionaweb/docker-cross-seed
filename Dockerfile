@@ -7,8 +7,9 @@ WORKDIR /src
 FROM base AS source
 
 # get and extract source from git
+ARG BRANCH
 ARG VERSION
-ADD https://github.com/cross-seed/cross-seed.git#v$VERSION ./
+ADD https://github.com/cross-seed/cross-seed.git#${BRANCH:-v$VERSION} ./
 
 # build stage ==================================================================
 FROM base AS build-backend

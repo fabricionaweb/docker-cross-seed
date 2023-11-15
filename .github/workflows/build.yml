@@ -43,7 +43,7 @@ jobs:
             # branch
             type=ref,event=branch
             # version
-            type=raw,value=${{ env.VERSION }}
+            type=raw,value=${{ env.VERSION }},enable={{ is_default_branch }}
             # commit
             type=sha,prefix=
 
