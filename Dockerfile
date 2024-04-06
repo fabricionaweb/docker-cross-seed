@@ -12,7 +12,7 @@ ARG VERSION
 ADD https://github.com/cross-seed/cross-seed.git#${BRANCH:-v$VERSION} ./
 
 # build stage ==================================================================
-FROM base AS build-backend
+FROM base AS build-app
 
 # dependencies
 RUN apk add --no-cache build-base python3 nodejs-current && corepack enable npm
@@ -48,8 +48,8 @@ EXPOSE 2468
 
 # copy files
 COPY --from=source /src/package.json /app/
-COPY --from=build-backend /src/node_modules /app/node_modules
-COPY --from=build-backend /src/dist /app/dist
+COPY --from=build-app /src/node_modules /app/node_modules
+COPY --from=build-app /src/dist /app/dist
 COPY ./rootfs/. /
 
 # runtime dependencies
