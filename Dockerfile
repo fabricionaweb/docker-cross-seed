@@ -30,7 +30,9 @@ RUN npm prune --omit=dev && \
     find ./ -type f \( \
         -iname "*.cmd" -o -iname "*.bat" -o \
         -iname "*.map" -o -iname "*.md" -o \
-        -iname "*.ts" -o -iname "*.git*" -o \
+        -iname "*.ts" -o -iname "*.git*" \
+    \) -delete && \
+    find ./node_modules -type f \( \
         -iname "Makefile" -o -iname "AUTHORS*" -o \
         -iname "LICENSE*" -o -iname "CONTRIBUTING*" -o \
         -iname "CHANGELOG*" -o -iname "README*" \
