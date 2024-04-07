@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv sh
 
 # run (from /usr/local/bin)
-exec cross-seed daemon --verbose
+exec cross-seed daemon
