@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1-labs
-FROM public.ecr.aws/docker/library/alpine:3.19 AS base
+FROM public.ecr.aws/docker/library/alpine:3.20 AS base
 ENV TZ=UTC
 WORKDIR /src
 
@@ -15,7 +15,7 @@ ADD https://github.com/cross-seed/cross-seed.git#${BRANCH:-v$VERSION} ./
 FROM base AS build-app
 
 # dependencies
-RUN apk add --no-cache build-base python3 nodejs-current && corepack enable npm
+RUN apk add --no-cache build-base python3 npm
 
 # node_modules
 COPY --from=source /src/package*.json /src/tsconfig.json ./
@@ -55,7 +55,7 @@ COPY --from=build-app /src/dist /app/dist
 COPY ./rootfs/. /
 
 # runtime dependencies
-RUN apk add --no-cache tzdata s6-overlay nodejs-current curl
+RUN apk add --no-cache tzdata s6-overlay npm curl
 
 # run using s6-overlay
 ENTRYPOINT ["/entrypoint.sh"]
