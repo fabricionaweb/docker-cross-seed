@@ -6,10 +6,11 @@ WORKDIR /src
 # source stage =================================================================
 FROM base AS source
 
-# get and extract source from git
+# get and extract source from git (must use only one or another build-args)
 ARG BRANCH
 ARG VERSION
-ADD https://github.com/cross-seed/cross-seed.git#${BRANCH:-v$VERSION} ./
+ADD https://github.com/cross-seed/cross-seed/archive/refs/${BRANCH:+heads/$BRANCH}${VERSION:+tags/v$VERSION}.tar.gz /tmp/source.tgz
+RUN tar --strip-components=1 -xf /tmp/source.tgz
 
 # build stage ==================================================================
 FROM base AS build-app
